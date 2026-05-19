@@ -1,0 +1,18 @@
+{
+  "name": "streak",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": { "node": ">=22" },
+  "pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+  "scripts": {
+    "dev": "pnpm --filter @streak/web dev",
+    "build": "pnpm --filter @streak/web build",
+    "preview": "pnpm --filter @streak/web preview",
+    "typecheck": "pnpm --filter @streak/web exec tsc -b",
+    "test": "pnpm --filter @streak/web test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeappstore-online/streak.git"
+  }
+}
