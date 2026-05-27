@@ -86,6 +86,14 @@ function SignIn() {
         >
           Sign in with GitHub
         </button>
+        <button
+          type="button"
+          onClick={() => getFas().auth.signIn('google')}
+          className="rounded-full px-6 py-3 font-bold text-white"
+          style={{ background: 'var(--ink)' }}
+        >
+          Sign in with Google
+        </button>
         <p className="text-[0.75rem] text-[var(--muted)]">
           Free forever. MIT-licensed. No tracking. Part of{' '}
           <a href="https://freeappstore.online" target="_blank" rel="noopener noreferrer" className="underline">
