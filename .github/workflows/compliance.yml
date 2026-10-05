@@ -8,4 +8,4 @@ on:
 
 jobs:
   ci:
-    uses: freeappstore-online/freeappstore/.github/workflows/app-ci.yml@main
+    uses: freeappstore-online/ci-workflows/.github/workflows/app-ci.yml@main
