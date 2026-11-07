@@ -39,19 +39,15 @@ describe('HTML compliance', () => {
     expect(html).toMatch(/<meta\s[^>]*name="viewport"/)
   })
 
-  it('has manifest link', () => {
-    expect(html).toMatch(/<link\s[^>]*rel="manifest"/)
+  it('has a manifest (VitePWA injects the link at build)', () => {
+    expect(read(web, 'vite.config.ts')).toMatch(/VitePWA\([\s\S]*manifest:/)
   })
 })
 
 describe('PWA manifest', () => {
-  it('public/manifest.json exists and has name, display, start_url', () => {
-    const manifestPath = resolve(web, 'public/manifest.json')
-    expect(existsSync(manifestPath)).toBe(true)
-    const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
-    expect(manifest).toHaveProperty('name')
-    expect(manifest).toHaveProperty('display')
-    expect(manifest).toHaveProperty('start_url')
+  it('VitePWA manifest has name, display, start_url', () => {
+    const config = read(web, 'vite.config.ts')
+    for (const key of ['name', 'display', 'start_url']) expect(config).toMatch(new RegExp(`\\b${key}\\b['"]?:`))
   })
 })
 
