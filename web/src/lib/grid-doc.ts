@@ -18,7 +18,7 @@ export interface ProfileDoc {
 
 /**
  * Minimal collection-shaped interface so this module is testable without the SDK.
- * Mirrors `fas.db.collection(name)` from @freeappstore/sdk.
+ * Mirrors `fas.collections.collection(name)` from @freeappstore/sdk.
  */
 export interface CollectionLike<T extends object> {
   create(doc: T): Promise<T & { id: string }>
@@ -95,7 +95,7 @@ export async function findOrCreateProfileDoc(
 export async function resolveBuddyByLogin(
   profiles: CollectionLike<ProfileDoc>,
   login: string,
-): Promise<{ profileId: string; profile: ProfileDoc; ownerId: string } | null> {
+): Promise<{ profileId: string; profile: ProfileDoc } | null> {
   const res = await profiles.query({
     orderBy: 'updated_at',
     order: 'desc',
@@ -103,10 +103,7 @@ export async function resolveBuddyByLogin(
   })
   for (const doc of res.documents) {
     if (doc.login.toLowerCase() === login.toLowerCase()) {
-      // The SDK exposes _owner on query results — types loose here because the SDK's
-      // QueryResult<T> doesn't strictly include it in T. Cast pragmatically.
-      const ownerId = (doc as unknown as { _owner?: string })._owner ?? ''
-      return { profileId: doc.id, profile: { login: doc.login, gridDocId: doc.gridDocId, avatarUrl: doc.avatarUrl }, ownerId }
+      return { profileId: doc.id, profile: { login: doc.login, gridDocId: doc.gridDocId, avatarUrl: doc.avatarUrl } }
     }
   }
   return null

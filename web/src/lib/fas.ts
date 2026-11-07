@@ -1,5 +1,5 @@
 // SDK singleton + bootstrap helpers. Mirrors @freeappstore/sdk's normal usage —
-// the rest of the app reads `fas.auth.user`, `fas.kv`, `fas.db`, `fas.rooms`.
+// the rest of the app reads `fas.auth.user`, `fas.kv`, `fas.collections`, `fas.rooms`.
 
 import { initApp, type FreeAppStore } from '@freeappstore/sdk'
 

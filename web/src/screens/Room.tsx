@@ -29,7 +29,7 @@ export function Room({ config }: RoomProps) {
   // Fetch each buddy's grid once on mount. Cheap: 1 doc per buddy, ~25KB max.
   useEffect(() => {
     let cancelled = false
-    const grids = getFas().db.collection('grids') as unknown as CollectionLike<GridDoc>
+    const grids = getFas().collections.collection('grids', { visibility: 'public-read' }) as unknown as CollectionLike<GridDoc>
     ;(async () => {
       for (let i = 0; i < config.buddies.length; i++) {
         const b = config.buddies[i]!
@@ -62,9 +62,9 @@ export function Room({ config }: RoomProps) {
 
   // Subscribe to each buddy's pulse room. On any pulse, re-fetch that buddy's doc.
   useEffect(() => {
-    const grids = getFas().db.collection('grids') as unknown as CollectionLike<GridDoc>
+    const grids = getFas().collections.collection('grids', { visibility: 'public-read' }) as unknown as CollectionLike<GridDoc>
     const rooms = config.buddies
-      .filter((b) => b.ownerId) // skip ghost slots
+      .filter((b) => b.gridDocId) // skip ghost slots
       .map((b) => {
         const room = getFas().rooms.join(`streak-pulse-${b.login}`)
         const off = room.onMessage(async () => {
@@ -118,7 +118,7 @@ export function Room({ config }: RoomProps) {
                       style={{ border: '1px solid var(--line-strong)' }} />
                   )}
                   <span className="font-bold text-[var(--ink)]">@{ref.login}</span>
-                  {!ref.ownerId && (
+                  {!ref.gridDocId && (
                     <span className="text-[0.75rem] text-[var(--muted)]">(not on Streak yet)</span>
                   )}
                   {loading && <span className="text-[0.75rem] text-[var(--muted)]">loading…</span>}

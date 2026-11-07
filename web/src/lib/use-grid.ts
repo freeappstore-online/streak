@@ -17,7 +17,7 @@ export function useGrid(gridDocId: string | null): {
     if (!gridDocId) return
     let cancelled = false
     ;(async () => {
-      const grids = getFas().db.collection('grids') as unknown as CollectionLike<GridDoc>
+      const grids = getFas().collections.collection('grids', { visibility: 'public-read' }) as unknown as CollectionLike<GridDoc>
       const doc = await grids.get(gridDocId)
       if (cancelled) return
       setGrid({ checks: doc?.checks ?? {} })
@@ -33,7 +33,7 @@ export function useGrid(gridDocId: string | null): {
       if (!gridDocId) return
       // Optimistic — animate now, sync second. Server is authoritative on conflict.
       setGrid((prev) => ({ checks: applyCheck(prev.checks, habitId, date) }))
-      const grids = getFas().db.collection('grids') as unknown as CollectionLike<GridDoc>
+      const grids = getFas().collections.collection('grids', { visibility: 'public-read' }) as unknown as CollectionLike<GridDoc>
       await recordCheck(grids, gridDocId, habitId, date)
     },
     [gridDocId],

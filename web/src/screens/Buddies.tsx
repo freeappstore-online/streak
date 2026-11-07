@@ -35,14 +35,13 @@ export function Buddies({ config, setConfig }: BuddiesProps) {
     setPending(true)
     setMsg(null)
     try {
-      const profiles = getFas().db.collection('profiles') as unknown as CollectionLike<ProfileDoc>
+      const profiles = getFas().collections.collection('profiles', { visibility: 'public-read' }) as unknown as CollectionLike<ProfileDoc>
       const resolved = await resolveBuddyByLogin(profiles, login)
       if (!resolved) {
         // Ghost slot — still add them; the Room/grid views will show an empty
         // square until they sign up and create a profile.
         const ghost: BuddyRef = {
           login,
-          ownerId: '',
           gridDocId: '',
           avatarUrl: avatarUrlFor(login),
           addedAt: today,
@@ -52,7 +51,6 @@ export function Buddies({ config, setConfig }: BuddiesProps) {
       } else {
         const ref: BuddyRef = {
           login: resolved.profile.login,
-          ownerId: resolved.ownerId,
           gridDocId: resolved.profile.gridDocId,
           avatarUrl: resolved.profile.avatarUrl ?? avatarUrlFor(resolved.profile.login),
           addedAt: today,
@@ -87,7 +85,7 @@ export function Buddies({ config, setConfig }: BuddiesProps) {
 
       <ul className="flex flex-col gap-2">
         {config.buddies.map((b) => {
-          const isGhost = !b.ownerId
+          const isGhost = !b.gridDocId
           return (
             <li key={b.login} className="flex items-center justify-between gap-3 rounded-2xl border px-4 py-3"
               style={{ borderColor: 'var(--line)', background: 'var(--panel)' }}>

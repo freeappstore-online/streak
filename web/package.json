@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@freeappstore/sdk": "^0.6.1",
+    "@freeappstore/sdk": "^0.16.48",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
@@ -26,7 +26,7 @@
     "tailwindcss": "^4.2.4",
     "typescript": "~6.0.2",
     "vite": "^8.0.10",
-    "vitest": "^4.1.5",
-    "vite-plugin-pwa": "^1.3.0"
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.5"
   }
 }

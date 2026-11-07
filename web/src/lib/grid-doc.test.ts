@@ -161,7 +161,7 @@ describe('resolveBuddyByLogin', () => {
     ])
     const got = await resolveBuddyByLogin(profiles, 'serge')
     expect(got?.profile.login).toBe('Serge')
-    expect(got?.ownerId).toBe('user-1')
+    expect(got?.profileId).toBe('p1')
   })
 
   it('returns null when no profile matches', async () => {

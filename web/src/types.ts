@@ -9,7 +9,6 @@ export interface Habit {
 
 export interface BuddyRef {
   login: string
-  ownerId: string // GitHub user.id of the buddy — needed for `db.query({ owner })`
   gridDocId: string
   avatarUrl: string | null
   addedAt: string // YYYY-MM-DD

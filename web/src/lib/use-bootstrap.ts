@@ -23,8 +23,8 @@ export function useBootstrap(
     ;(async () => {
       try {
         const fas = getFas()
-        const grids = fas.db.collection('grids') as unknown as CollectionLike<GridDoc>
-        const profiles = fas.db.collection('profiles') as unknown as CollectionLike<ProfileDoc>
+        const grids = fas.collections.collection('grids', { visibility: 'public-read' }) as unknown as CollectionLike<GridDoc>
+        const profiles = fas.collections.collection('profiles', { visibility: 'public-read' }) as unknown as CollectionLike<ProfileDoc>
 
         let gridDocId = config.gridDocId
         if (!gridDocId) {
